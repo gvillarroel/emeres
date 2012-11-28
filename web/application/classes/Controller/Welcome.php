@@ -4,7 +4,16 @@ class Controller_Welcome extends Controller {
 
 	public function action_index()
 	{
-		$this->response->body('hello, world!');
+                $model = new Model_Usuario();
+                
+                $model->nombre = "NombreEjemplo";
+                $model->apellido = "ApellidoEjemplo";
+                
+                $view = View::factory("home/index");
+                
+                $view->set("usuario", $model);
+                
+                $this->response->body($view);
 	}
 
 } // End Welcome

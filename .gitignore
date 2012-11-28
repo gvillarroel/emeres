@@ -1,2 +1,2 @@
-application/cache/*
-application/logs/*
+web/application/cache/*
+web/application/logs/*
