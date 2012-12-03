@@ -10,7 +10,8 @@ class Model_Link extends ORM {
     public function ObtenerLinks($usuario)
     {
         $links = new Model_Link();
-        return $links->where("idTipoUsuario", "=", $usuario->idTipoUsuario)->find_all();
+        $links->where("idTipoUsuario", "=", $usuario->idTipoUsuario);
+        return $links->find_all();
     }
     
 }

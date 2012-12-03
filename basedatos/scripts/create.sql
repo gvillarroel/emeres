@@ -51,7 +51,7 @@ insert into Link (texto, link, idTipoUsuario, idLinkPadre, orden)
 values ('Foro', 'foro', 1, null, 1);
 
 insert into Link (texto, link, idTipoUsuario, idLinkPadre, orden)
-values ('Foro', 'foro', 1, null, 1);
+values ('Foro', 'foro', 2, null, 1);
 insert into Link (texto, link, idTipoUsuario, idLinkPadre, orden)
-values ('Ver compromisos', 'compromisos/ver', 1, null, 1);
+values ('Ver compromisos', 'compromisos/ver', 2, null, 1);
 
