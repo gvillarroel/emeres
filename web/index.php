@@ -13,7 +13,7 @@ $application = 'application';
  *
  * @link http://kohanaframework.org/guide/about.install#modules
  */
-$modules = 'modules';
+$modules = '/var/www/emeres/web/modules';
 
 /**
  * The directory in which the Kohana resources are located. The system
@@ -21,7 +21,7 @@ $modules = 'modules';
  *
  * @link http://kohanaframework.org/guide/about.install#system
  */
-$system = 'system';
+$system = '/var/www/emeres/web/system';
 
 /**
  * The default extension of resource files. If you change this, all resources
