@@ -23,7 +23,7 @@ class Controller_Inicio extends Controller {
         if($this->request->post("clave") != null)
            if($usuario->EsClave($this->request->post("clave")))
            {
-               Session::instance()->SetUsuario($usuario->id);
+               Session::instance()->SetUsuario($usuario);
                return $this->redirect("inicio/principal");
            }
            else
@@ -35,9 +35,22 @@ class Controller_Inicio extends Controller {
         $this->response->body($template);
     }
     
+    public function action_cerrarSesion()
+    {
+        Session::instance()->SetUsuario(NULL);
+        return $this->redirect("/");
+    }
+    
     public function action_principal(){
         if(!Session::instance()->GetUsuario())
             return $this->redirect("/");
+        $links = new Model_Link();
+        $template = View::factory("base/menu");
+        $template->set("usuario", Session::instance()->GetUsuario());
+        $template->set("links", $links->ObtenerLinks(Session::instance()->GetUsuario()));
+        
+        
+        $this->response->body($template);
     }
     
 }

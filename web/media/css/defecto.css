@@ -1,0 +1,63 @@
+
+root { 
+    display: block;
+}
+
+body{
+    background-color: #eee;
+    padding: 0px;
+    margin: 0px;
+    font-size: 14px;
+}
+
+input {
+    font-size: 14px;
+    margin-left: 15px;
+}
+
+.principal
+{
+    width-max: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0px;
+    background-color: #fff;
+    height: 100%;
+}
+
+.usuario
+{
+    text-align: right;
+    padding: 10px 10px 0px 0px;
+}
+
+#inicioSesion
+{
+    width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid #ccc;
+    position: relative;
+    top: 100px;
+}
+#inicioSesion label{
+    width: 100px;
+    display: inline-block;
+}
+#inicioSesion input[type=text], #inicioSesion input[type=password]{
+    width: 200px;
+}
+
+.menu
+{
+    width-max: 200px;
+    display: inline-block;
+    border-right: 1px solid #ccc;
+    padding-right: 15px;
+    height: auto;
+}
+.body
+{
+    display: inline-block;
+    vertical-align: top;
+}

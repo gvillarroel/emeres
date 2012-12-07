@@ -1,6 +1,7 @@
 <html>
     <head>
         <? if(isset($head)) echo $head ?>
+        <? echo HTML::style("media/css/defecto.css"); ?>
     </head>
     <body>
         <div class="principal" >

@@ -30,7 +30,7 @@ date_default_timezone_set('America/Santiago');
  * @link http://kohanaframework.org/guide/using.configuration
  * @link http://www.php.net/manual/function.setlocale
  */
-setlocale(LC_ALL, 'en_US.utf-8');
+setlocale(LC_ALL, 'es_CL.iso-8859-1');
 
 /**
  * Enable the Kohana auto-loader.
@@ -90,7 +90,12 @@ if (isset($_SERVER['KOHANA_ENV']))
  * - boolean  expose      set the X-Powered-By header                        FALSE
  */
 Kohana::init(array(
+#<<<<<<< HEAD
 	'base_url'   => '/var/www/emeres/web/',
+#=======
+#	'base_url'   => '/',
+#        'charset'   =>  'iso-8859-1'
+#>>>>>>> 704c27c37c18be2bb163a0904d747f02af8646ab
 ));
 
 /**
