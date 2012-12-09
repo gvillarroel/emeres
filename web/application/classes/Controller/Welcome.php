@@ -5,7 +5,7 @@ class Controller_Welcome extends Controller {
 	public function action_index()
 	{
                 $model = new Model_Usuario();
-                echo "aaaaaaa";
+                
                 $model->nombre = "NombreEjemplo";
                 $model->apellido = "ApellidoEjemplo";
                 

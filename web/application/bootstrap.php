@@ -91,7 +91,7 @@ if (isset($_SERVER['KOHANA_ENV']))
  */
 Kohana::init(array(
 #<<<<<<< HEAD
-	'base_url'   => '/var/www/emeres/web/',
+	'base_url'   => '/emeres/web/',
 #=======
 #	'base_url'   => '/',
 #        'charset'   =>  'iso-8859-1'

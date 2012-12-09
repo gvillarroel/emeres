@@ -24,7 +24,7 @@ class Model_Usuario extends ORM {
     {
         if($this->codigoActivacion == NULL)
         {
-            // Creo código de activación
+            // Creo cï¿½digo de activaciï¿½n
             $this->codigoActivacion = "";
             while(strlen($this->codigoActivacion) < 19)
             { $this->codigoActivacion.=substr(Model_Usuario::$_rand_char,rand(0, 62),1); }
@@ -41,6 +41,14 @@ class Model_Usuario extends ORM {
         
         mail($to, $subject, $mensaje, $cabeceras);
     }
+    
+    public function getUsuarioById($id){
+        $this->where("id", "=", $id);
+        
+        return $this->find();
+    }
+    
+    
     
 }
 
