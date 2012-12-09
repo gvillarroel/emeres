@@ -94,7 +94,7 @@ class Controller_Usuario extends Controller {
 
     public function action_buscar() {
         
-        $editar = View::factory("usuario/BuscarUsuario");
+        $editar = View::factory("usuario/buscarUsuario");
         
 
         
