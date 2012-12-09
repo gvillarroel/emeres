@@ -2,6 +2,14 @@
     <head>
         <? if(isset($head)) echo $head ?>
         <? echo HTML::style("media/css/defecto.css"); ?>
+        <? echo HTML::style("media/css/ui-lightness/jquery-ui-1.9.2.custom.css"); ?>
+        <? echo HTML::style("media/css/ui.jqgrid.css"); ?>
+        <? echo html::script('media/js/jquery-1.8.3.js'); ?>
+        <? echo html::script('media/js/jquery-ui-1.9.2.custom.js'); ?>
+        <? echo html::script('media/js/jquery.jqGrid.min.js'); ?>
+        <? echo html::script('media/js/i18n/grid.locale-es.js'); ?>
+        
+        
     </head>
     <body>
         <div class="principal" >

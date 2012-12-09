@@ -96,17 +96,52 @@ class Controller_Usuario extends Controller {
         
         $editar = View::factory("usuario/buscarUsuario");
         
+//        $data = ORM::factory('user')->find_all();
+        
+//        $usuarioModel = new Model_Usuario();
+//        $usuarios = $usuarioModel->getAllUsuariosAndTipos();
+        
+//        $query = DB::select('Usuario.*', 'TipoUsuario.nombre')
+//            ->from('Usuario')
+//            ->join('TipoUsuario')
+//            ->on('Usuario.idTipoUsuario', '=', 'TipoUsuario.id')
+//            ->execute();
+        $usuarioModel = new Model_Usuario();
+        $logger = Log::instance();
+        $usuarios = $usuarioModel->getAllUsuariosAndTipos();
+//        $detalleUsuario = $usuarioModel->getUsuarioById($this->request->param("id"));
+//        $detalleTipoUsuario = $tipoUsuarioModel->getAllTipo();
+
+        $editar->set("usuario", $usuarios->nombre);
+        $editar->set("correoElectronico", $usuarios->correoElectronico);
+        $editar->set("idTipoUsuario", $usuarios->idTipoUsuario);
+        
+//        $editar->set("detalleCorreo", $detalleUsuario->correoElectronico);
+        
+//        foreach ($detalleTipoUsuario as $tipo){
+//            $arreglo[] = array($tipo->id =>$tipo->nombre);
+//        }
+        $logger->write();
+        $editar->set("usuarios", $usuarios);
+        
+//        $query = DB::select()->from('Usuario');
 
         
-        
+//        Table::factory()
+//	->set_body_data($query)
+//	->render(TRUE);
         
         
         $links = new Model_Link();
         $template = View::factory("base/menu");
         $template->set("usuario", Session::instance()->GetUsuario());
         $template->set("links", $links->ObtenerLinks(Session::instance()->GetUsuario()));
+        $template->set("usuarios", $usuarios);
         $template->body = $editar;
         $this->response->body($template);
+        
+        
+        
     }
     
     public function action_guardarUsuario(){
