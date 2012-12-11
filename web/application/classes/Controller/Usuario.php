@@ -65,24 +65,21 @@ class Controller_Usuario extends Controller {
     }
 
     public function action_editarUsuario() {
-        
+
         $editar = View::factory("usuario/editarUsuario");
 
         $usuarioModel = new Model_Usuario();
         $tipoUsuarioModel = new Model_TipoUsuario;
-        $logger = Log::instance();
+
         $detalleUsuario = $usuarioModel->getUsuarioById($this->request->param("id"));
         $detalleTipoUsuario = $tipoUsuarioModel->getAllTipo();
         $editar->set("detalleUsuario", $detalleUsuario->nombre);
         $editar->set("detalleCorreo", $detalleUsuario->correoElectronico);
-        
-        foreach ($detalleTipoUsuario as $tipo){
-            $arreglo[] = array($tipo->id =>$tipo->nombre);
-        }
-        $logger->write();
-        $editar->set("detalleTipoUsuario", $detalleTipoUsuario );
 
-        
+
+        $editar->set("detalleTipoUsuario", $detalleTipoUsuario);
+
+
         $template = View::factory("base/menu");
         $template->body = $editar;
         $links = new Model_Link();
