@@ -92,18 +92,9 @@ class Controller_Usuario extends Controller {
     public function action_buscar() {
         
         $editar = View::factory("usuario/buscarUsuario");
-        
-//        $data = ORM::factory('user')->find_all();
-        
-//        $usuarioModel = new Model_Usuario();
-//        $usuarios = $usuarioModel->getAllUsuariosAndTipos();
-        
-//        $query = DB::select('Usuario.*', 'TipoUsuario.nombre')
-//            ->from('Usuario')
-//            ->join('TipoUsuario')
-//            ->on('Usuario.idTipoUsuario', '=', 'TipoUsuario.id')
-//            ->execute();
+
         $usuarioModel = new Model_Usuario();
+<<<<<<< HEAD
         $logger = Log::instance();
         $usuarios = $usuarioModel->getAllUsuariosAndTipos();
 //        $detalleUsuario = $usuarioModel->getUsuarioById($this->request->param("id"));
@@ -119,26 +110,22 @@ class Controller_Usuario extends Controller {
 //            $arreglo[] = array($tipo->id =>$tipo->nombre);
 //        }
         $logger->write();
+=======
+        $usuarios = $usuarioModel->getAllUsuarios();
+>>>>>>> 97d92b22c7df60651a92b68cbfc62bde50a04b6e
         $editar->set("usuarios", $usuarios);
-        
-//        $query = DB::select()->from('Usuario');
 
+//        $query = DB::query(Database::SELECT, 'SELECT u.nombre, t.nombre FROM Usuario u, TipoUsuario t WHERE u.idTipoUsuario = t.id;');
+//        $result = $query->execute();
+//        $editar->set("result", $result);        
         
-//        Table::factory()
-//	->set_body_data($query)
-//	->render(TRUE);
-        
-        
-        $links = new Model_Link();
         $template = View::factory("base/menu");
+        $template->body = $editar;
+        $links = new Model_Link();
+
         $template->set("usuario", Session::instance()->GetUsuario());
         $template->set("links", $links->ObtenerLinks(Session::instance()->GetUsuario()));
-        $template->set("usuarios", $usuarios);
-        $template->body = $editar;
         $this->response->body($template);
-        
-        
-        
     }
     
     public function action_guardarUsuario(){

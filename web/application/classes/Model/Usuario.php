@@ -58,40 +58,9 @@ protected static $_rand_char = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv
         return $this->find();
     }
 
-    public function getAllUsuariosAndTipos(){
-//        $this->where("id", "=", $id);
-        
-//        $films = DB::select()
-//            ->from('Usuario')
-////            ->where('title', '=', $my_title)
-////            ->and_where($category_name, 'IN', DB::select()->from('categories')->execute()->as_array('id', 'name'))
-//            ->where('idTipoUsuario', 'IN', DB::select()
-//                                                ->from('TipoUsuario')
-//                                                ->execute()
-//                                                ->as_array('id', 'name'))
-//            ->execute();
-        
-//        $films = ORM::factory('Usuario')
-//            ->join('films_categories')->on('films_categories.film_id', '=', 'film.id')
-//            ->join(array('categories', 'category'))->on('category.id', '=', 'films_categories.category_id')
-//            ->where('film.title', '=', $film_title)
-//            ->where('category.name', '=', $category_name)
-//            ->find_all();   
-        
-//        $query = DB::select('authors.name', 'posts.content')
-//        $query = DB::select('Usuario.*', 'TipoUsuario.nombre')
-//                ->from('Usuario')
-//                ->join('TipoUsuario')
-//                ->on('Usuario.idTipoUsuario', '=', 'TipoUsuario.id')
-////                ->where('authors.name', '=', 'smith')
-//                ->execute();
-
-        
-        
-        
-        
-//        return $query->as_array();
-        return $this->find();
+    public function getAllUsuarios(){
+//        return $this->find();
+        return $this->find_all();
     }    
     
 }
