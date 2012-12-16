@@ -17,8 +17,8 @@ class Controller_Inicio extends Controller {
         
         $usuario = new Model_Usuario();
         
-        if($this->request->post("correoElectronico") != null)
-                $usuario = $usuario->where ("correoElectronico", "=", $this->request->post("correoElectronico"))->find();
+        if($this->request->post("nick") != null)
+                $usuario = $usuario->where ("NICK", "=", $this->request->post("nick"))->find();
         
         if($this->request->post("clave") != null)
            if($usuario->EsClave($this->request->post("clave")))
@@ -28,7 +28,9 @@ class Controller_Inicio extends Controller {
            }
            else
            {
-               $template->set("errors",array(I18n::get("inicio.sesion.errorClave")));
+               //$template->set("errors",array(I18n::get("inicio.sesion.errorClave")));
+               $template->set("errors",array($usuario->CLAVE));
+               
            }
            
         $template->body->set("usuario", $usuario);

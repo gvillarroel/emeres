@@ -13,9 +13,9 @@ class Controller_Usuario extends Controller {
 
         $usuario = new Model_Usuario();
 
-        if ($this->request->post("correoElectronico") != NULL) {
+        if ($this->request->post("MAIL") != NULL) {
             if ($usuario->
-                            where("correoElectronico", "=", $this->request->post("correoElectronico"))
+                            where("MAIL", "=", $this->request->post("MAIL"))
                             ->count_all() > 0) {
                 $usuario->find();
                 $mensaje = View::factory("usuario/recuperarClaveMensaje")->set("usuario", $usuario)->render();
@@ -38,8 +38,8 @@ class Controller_Usuario extends Controller {
             $codigo = $this->request->query("codigo");
 
             if ($usuario->
-                            where("id", "=", $id)->
-                            where("codigoActivacion", "=", $codigo)->
+                            where("ID_USUARIO", "=", $id)->
+                            where("CODIGO_ACTIVACION", "=", $codigo)->
                             count_all() > 0) {
                 $usuario->find();
 
@@ -73,8 +73,8 @@ class Controller_Usuario extends Controller {
 
         $detalleUsuario = $usuarioModel->getUsuarioById($this->request->param("id"));
         $detalleTipoUsuario = $tipoUsuarioModel->getAllTipo();
-        $editar->set("detalleUsuario", $detalleUsuario->nombre);
-        $editar->set("detalleCorreo", $detalleUsuario->correoElectronico);
+        $editar->set("detalleUsuario", $detalleUsuario->NICK);
+        $editar->set("detalleCorreo", $detalleUsuario->MAIL);
 
 
         $editar->set("detalleTipoUsuario", $detalleTipoUsuario);
@@ -109,11 +109,11 @@ class Controller_Usuario extends Controller {
 //        $detalleUsuario = $usuarioModel->getUsuarioById($this->request->param("id"));
 //        $detalleTipoUsuario = $tipoUsuarioModel->getAllTipo();
 
-        $editar->set("usuario", $usuarios->nombre);
-        $editar->set("correoElectronico", $usuarios->correoElectronico);
-        $editar->set("idTipoUsuario", $usuarios->idTipoUsuario);
+        $editar->set("usuario", $usuarios->NICK);
+        $editar->set("MAIL", $usuarios->MAIL);
+        $editar->set("idTipoUsuario", $usuarios->ID_TIPO_USUARIO);
         
-//        $editar->set("detalleCorreo", $detalleUsuario->correoElectronico);
+//        $editar->set("detalleCorreo", $detalleUsuario->MAIL);
         
 //        foreach ($detalleTipoUsuario as $tipo){
 //            $arreglo[] = array($tipo->id =>$tipo->nombre);

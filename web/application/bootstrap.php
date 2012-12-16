@@ -1,3 +1,4 @@
+
 <?php defined('SYSPATH') or die('No direct script access.');
 
 // -- Environment setup --------------------------------------------------------
@@ -91,7 +92,7 @@ if (isset($_SERVER['KOHANA_ENV']))
  */
 Kohana::init(array(
 #<<<<<<< HEAD
-	'base_url'   => '/emeres/web/',
+	'base_url'   => '/',
 #=======
 #	'base_url'   => '/',
 #        'charset'   =>  'iso-8859-1'

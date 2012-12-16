@@ -1,38 +1,48 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
 class Model_Usuario extends ORM {
-    protected $_table_name = "Usuario";
-    protected $_ignored_columns = array("clave");
-    protected static $_rand_char = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
+    protected $_table_name = "USUARIO";
+    protected $_primary_key = "ID_USUARIO";
+    
+    protected $_belongs_to = array('TIPO' => array(
+        'model' => 'TipoUsuario',
+        'foreign_key' => 'ID_TIPO_USUARIO'
+    ));
+    
+    
+
+
+
+protected static $_rand_char = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
 
     public function EsClave($clave)
     {
-        return $this->clave == md5($clave);
+        return $this->CLAVE == md5($clave);
     }
     
     public function CambiarClave($clave)
     {
-        if($this->id != NULL)
+        if($this->ID_USUARIO != NULL)
         {
-            $this->clave = md5($clave);
-            $this->codigoActivacion = NULL;
+            $this->CLAVE = md5($clave);
+            $this->CODIGO_ACTIVACION = NULL;
             $this->save();
         }
     }
 
     public function RecuperarClave($mensaje)
     {
-        if($this->codigoActivacion == NULL)
+        if($this->CODIGO_ACTIVACION == NULL)
         {
             // Creo c�digo de activaci�n
-            $this->codigoActivacion = "";
-            while(strlen($this->codigoActivacion) < 19)
-            { $this->codigoActivacion.=substr(Model_Usuario::$_rand_char,rand(0, 62),1); }
+            $this->CODIGO_ACTIVACION = "";
+            while(strlen($this->CODIGO_ACTIVACION) < 19)
+            { $this->CODIGO_ACTIVACION.=substr(Model_Usuario::$_rand_char,rand(0, 62),1); }
             // Lo guardo
             $this->save();
         }
         
-        $to = $this->correoElectronico;
+        $to = $this->MAIL;
         $subject = I18n::get("Usuario.RecuperarClave.Asunto");
         $cabeceras  = 'MIME-Version: 1.0' . "\r\n";
         $cabeceras .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
@@ -43,7 +53,7 @@ class Model_Usuario extends ORM {
     }
     
     public function getUsuarioById($id){
-        $this->where("id", "=", $id);
+        $this->where("ID_USUARIO", "=", $id);
         
         return $this->find();
     }
