@@ -1,0 +1,3 @@
+Ejecuta 
+$ sh create.sh <<passwordRootMysql>>
+se creará una base de datos emeres, con password emeres y usuario emeres
