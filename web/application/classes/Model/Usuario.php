@@ -8,10 +8,6 @@ class Model_Usuario extends ORM {
         'model' => 'TipoUsuario',
         'foreign_key' => 'ID_TIPO_USUARIO'
     ));
-    
-    
-
-
 
 protected static $_rand_char = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
 

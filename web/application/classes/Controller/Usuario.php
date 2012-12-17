@@ -94,30 +94,18 @@ class Controller_Usuario extends Controller {
         $editar = View::factory("usuario/buscarUsuario");
 
         $usuarioModel = new Model_Usuario();
-<<<<<<< HEAD
+
         $logger = Log::instance();
         $usuarios = $usuarioModel->getAllUsuariosAndTipos();
-//        $detalleUsuario = $usuarioModel->getUsuarioById($this->request->param("id"));
-//        $detalleTipoUsuario = $tipoUsuarioModel->getAllTipo();
 
         $editar->set("usuario", $usuarios->NICK);
         $editar->set("MAIL", $usuarios->MAIL);
         $editar->set("idTipoUsuario", $usuarios->ID_TIPO_USUARIO);
         
-//        $editar->set("detalleCorreo", $detalleUsuario->MAIL);
-        
-//        foreach ($detalleTipoUsuario as $tipo){
-//            $arreglo[] = array($tipo->id =>$tipo->nombre);
-//        }
-        $logger->write();
-=======
+
         $usuarios = $usuarioModel->getAllUsuarios();
->>>>>>> 97d92b22c7df60651a92b68cbfc62bde50a04b6e
         $editar->set("usuarios", $usuarios);
 
-//        $query = DB::query(Database::SELECT, 'SELECT u.nombre, t.nombre FROM Usuario u, TipoUsuario t WHERE u.idTipoUsuario = t.id;');
-//        $result = $query->execute();
-//        $editar->set("result", $result);        
         
         $template = View::factory("base/menu");
         $template->body = $editar;
@@ -129,13 +117,26 @@ class Controller_Usuario extends Controller {
     }
     
     public function action_guardarUsuario(){
-        
-        
         $links = new Model_Link();
         $template = View::factory("base/menu");
         $template->set("usuario", Session::instance()->GetUsuario());
         $template->set("links", $links->ObtenerLinks(Session::instance()->GetUsuario()));
         $template->body = $editar;
+        $this->response->body($template);
+    }
+    
+    public function action_listado(){
+        $links = new Model_Link();
+        $usuarios = new Model_Usuario();
+        $template = View::factory("base/menu", array(
+            "usuario" => Session::instance()->GetUsuario(),
+            "links" => $links->ObtenerLinks(Session::instance()->GetUsuario())
+        ));
+        $idTipoUsuario = $this->request->query("tipo") ? $this->request->query("tipo") : "2";
+        $usuarios->where("ID_TIPO_USUARIO", "=", $idTipoUsuario);
+        $template->body = View::factory("usuario/listado", array(
+            "usuarios" => $usuarios->find_all()->as_array()
+        ));
         $this->response->body($template);
     }
 
