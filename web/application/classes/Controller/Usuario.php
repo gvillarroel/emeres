@@ -47,7 +47,7 @@ class Controller_Usuario extends Controller {
                     if ($this->request->post("clave") == $this->request->post("claveRevision"))
                         if (strlen($this->request->post("clave")) > 5) {
                             $usuario->CambiarClave($this->request->post("clave"));
-                            Session::instance()->SetUsuario($usuario->id);
+                            Session::instance()->SetUsuario($usuario);
                             return $this->redirect('/');
                         }
                         else
