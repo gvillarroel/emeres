@@ -70,12 +70,10 @@ class Controller_Usuario extends Controller {
 
         $usuarioModel = new Model_Usuario();
 
-
         $idParam = $this->request->param("id");
         $detalleUsuario = $usuarioModel->getUsuarioById($idParam);
         $sesion = Session::instance();
         $sesion->set("id_usurio_editar", $idParam);
-
 
         $editar->set("detalleNick", $detalleUsuario->NICK);
         $editar->set("detalleNombre", $detalleUsuario->NOMBRES_USUARIO);
@@ -106,7 +104,11 @@ class Controller_Usuario extends Controller {
 
         $usuarios = $usuarioModel->getAllUsuarios();
         $editar->set("usuarios", $usuarios);
-
+        
+        $tipoUsuarioModel = new Model_TipoUsuario;
+        $detalleTipoUsuario = $tipoUsuarioModel->getAllTipo();
+        $editar->set("detalleTipoUsuario", $detalleTipoUsuario);
+        
         $template = View::factory("base/menu");
         $template->body = $editar;
         $links = new Model_Link();
@@ -132,7 +134,7 @@ class Controller_Usuario extends Controller {
             $nombre = $this->request->post("nombre");
             $apellido = $this->request->post("apellido");
             $pertenencia = $this->request->post("pertenencia");
-            $telefono = $this->request->post("telefono");
+            $telefono = $this->request->post("fono");
 
             $sesion = Session::instance();
             $usuarioModel->updateUsuario($sesion->get("id_usurio_editar"), $nombre, $tipo, $mail, $apellido, $nick, $telefono, $pertenencia);
