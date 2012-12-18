@@ -82,6 +82,14 @@ class Model_Usuario extends ORM {
             ->values(array( $tipo, $nombre, $mail, $apellido, $nick, $telefono, $pertenencia, md5($clave)))
             ->execute();
     }
+    
+    public function buscarUsuario($name, $tipo){
+        
+        $query = DB::select()->from("usuario")->where("NOMBRES_USUARIO", "=", $name)->and_where("ID_TIPO_USUARIO", "=", $tipo);
+        
+        return $query->execute();
+        
+    }
 
 }
 

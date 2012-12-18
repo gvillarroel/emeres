@@ -102,13 +102,26 @@ class Controller_Usuario extends Controller {
 
         $usuarioModel = new Model_Usuario();
 
-        $usuarios = $usuarioModel->getAllUsuarios();
-        $editar->set("usuarios", $usuarios);
-        
-        $tipoUsuarioModel = new Model_TipoUsuario;
-        $detalleTipoUsuario = $tipoUsuarioModel->getAllTipo();
-        $editar->set("detalleTipoUsuario", $detalleTipoUsuario);
-        
+
+        $username = $this->request->post('username');
+        $tipo = $this->request->post("tipo");
+        if (isset($username) && isset($tipo)) {
+            $log = Log::instance();
+            $resultado = $usuarioModel->buscarUsuario($username, $tipo);
+            //$log->add(Log::ERROR, $resultado);
+            $editar->set("usuarios", $resultado);
+            $log->write();
+            $tipoUsuarioModel = new Model_TipoUsuario;
+            $detalleTipoUsuario = $tipoUsuarioModel->getAllTipo();
+            $editar->set("detalleTipoUsuario", $detalleTipoUsuario);
+        } else {
+            $usuarios = $usuarioModel->getAllUsuarios();
+            $editar->set("usuarios", $usuarios);
+
+            $tipoUsuarioModel = new Model_TipoUsuario;
+            $detalleTipoUsuario = $tipoUsuarioModel->getAllTipo();
+            $editar->set("detalleTipoUsuario", $detalleTipoUsuario);
+        }
         $template = View::factory("base/menu");
         $template->body = $editar;
         $links = new Model_Link();
@@ -179,7 +192,7 @@ class Controller_Usuario extends Controller {
         $this->response->body($template);
     }
 
-    public function action_insertarUsuario(){
+    public function action_insertarUsuario() {
         $editar = View::factory("usuario/insertarUsuario");
 
 
@@ -211,6 +224,7 @@ class Controller_Usuario extends Controller {
         $template->body = $editar;
         $this->response->body($template);
     }
+
 }
 
 ?>

@@ -54,34 +54,34 @@ echo Form::open("usuario/buscar");
         <?
         foreach ($usuarios as $tipo) {
             ?><tr>
-                <td><?php echo $tipo->NOMBRES_USUARIO; ?></td>
-                <td><? echo $tipo->APELLIDOS_USUARIO ?></td>
-                <td><? echo $tipo->FONO ?></td>
-                <td><? echo $tipo->MAIL ?></td>
-                <td><? echo $tipo->PERTENENCIA ?></td>
-                <td><? echo $tipo->NICK ?></td>
+                <td><?php echo $tipo["NOMBRES_USUARIO"]; ?></td>
+                <td><? echo $tipo["APELLIDOS_USUARIO"] ?></td>
+                <td><? echo $tipo["FONO"] ?></td>
+                <td><? echo $tipo["MAIL"] ?></td>
+                <td><? echo $tipo["PERTENENCIA"] ?></td>
+                <td><? echo $tipo["NICK"] ?></td>
                 <td><?php
-        switch ($tipo->ID_TIPO_USUARIO) {
-            case '1':
-                echo "Emeres";
-                break;
-            case '2':
-                echo "Socio";
-                break;
-            case '3':
-                echo 'Municipio';
-                break;
-            case '4':
-                echo 'Empresa';
-                break;
-        }
+            switch ($tipo["ID_TIPO_USUARIO"]) {
+                case '1':
+                    echo "Emeres";
+                    break;
+                case '2':
+                    echo "Socio";
+                    break;
+                case '3':
+                    echo 'Municipio';
+                    break;
+                case '4':
+                    echo 'Empresa';
+                    break;
+            }
             ?></td>
                 <td>
-                    <? echo HTML::anchor("usuario/editarUsuario/" . $tipo->ID_USUARIO, "Editar") ?>
+    <? echo HTML::anchor("usuario/editarUsuario/" . $tipo["ID_USUARIO"], "Editar") ?>
                 </td>
             </tr><?php
-            }
-                ?>            		
+}
+?>            		
     </tbody>
 <!--	<tfoot class="nav">
             <tr>
