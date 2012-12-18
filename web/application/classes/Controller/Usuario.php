@@ -69,13 +69,13 @@ class Controller_Usuario extends Controller {
         $editar = View::factory("usuario/editarUsuario");
 
         $usuarioModel = new Model_Usuario();
-        $tipoUsuarioModel = new Model_TipoUsuario;
+
 
         $idParam = $this->request->param("id");
         $detalleUsuario = $usuarioModel->getUsuarioById($idParam);
         $sesion = Session::instance();
         $sesion->set("id_usurio_editar", $idParam);
-        $detalleTipoUsuario = $tipoUsuarioModel->getAllTipo();
+
 
         $editar->set("detalleNick", $detalleUsuario->NICK);
         $editar->set("detalleNombre", $detalleUsuario->NOMBRES_USUARIO);
@@ -84,8 +84,8 @@ class Controller_Usuario extends Controller {
         $editar->set("detallePertenencia", $detalleUsuario->PERTENENCIA);
         $editar->set("detalleCorreo", $detalleUsuario->MAIL);
 
-
-
+        $tipoUsuarioModel = new Model_TipoUsuario;
+        $detalleTipoUsuario = $tipoUsuarioModel->getAllTipo();
         $editar->set("detalleTipoUsuario", $detalleTipoUsuario);
 
 
@@ -104,11 +104,8 @@ class Controller_Usuario extends Controller {
 
         $usuarioModel = new Model_Usuario();
 
-
-
         $usuarios = $usuarioModel->getAllUsuarios();
         $editar->set("usuarios", $usuarios);
-
 
         $template = View::factory("base/menu");
         $template->body = $editar;
@@ -166,6 +163,52 @@ class Controller_Usuario extends Controller {
         $this->response->body($template);
     }
 
+    public function action_nuevoUsuario() {
+        $nuevo = View::factory("usuario/nuevoUsuario");
+        $tipoUsuarioModel = new Model_TipoUsuario;
+        $detalleTipoUsuario = $tipoUsuarioModel->getAllTipo();
+        $nuevo->set("detalleTipoUsuario", $detalleTipoUsuario);
+
+        $links = new Model_Link();
+        $template = View::factory("base/menu");
+        $template->set("usuario", Session::instance()->GetUsuario());
+        $template->set("links", $links->ObtenerLinks(Session::instance()->GetUsuario()));
+        $template->body = $nuevo;
+        $this->response->body($template);
+    }
+
+    public function action_insertarUsuario(){
+        $editar = View::factory("usuario/insertarUsuario");
+
+
+        $usuarioModel = new Model_Usuario();
+        $validar = Validation::factory($_POST);
+        $validar->rule("nick", array($usuarioModel, "nickUnico"));
+
+        if ($validar->check()) {
+
+            $nick = $this->request->post("nick");
+            $clave = $this->request->post("clave");
+            $mail = $this->request->post("mail");
+            $tipo = $this->request->post("tipo");
+            $nombre = $this->request->post("nombre");
+            $apellido = $this->request->post("apellido");
+            $pertenencia = $this->request->post("pertenencia");
+            $telefono = $this->request->post("telefono");
+
+            $sesion = Session::instance();
+            $usuarioModel->nuevoUsuario($nombre, $tipo, $mail, $apellido, $nick, $telefono, $pertenencia, $clave);
+            $sesion->delete("id_usurio_editar");
+        } else {
+            $editar->set("error", $validar->errors());
+        }
+        $links = new Model_Link();
+        $template = View::factory("base/menu");
+        $template->set("usuario", Session::instance()->GetUsuario());
+        $template->set("links", $links->ObtenerLinks(Session::instance()->GetUsuario()));
+        $template->body = $editar;
+        $this->response->body($template);
+    }
 }
 
 ?>

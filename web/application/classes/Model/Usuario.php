@@ -66,20 +66,21 @@ class Model_Usuario extends ORM {
     }
 
     public function nickUnico($nick) {
-        $logger = Log::instance();
-        $logger->add(Log::ERROR, "Modelo usuario " . $nick);
-        $logger->write();
         $this->where('nick', '=', $nick);
 
         $var = $this->find_all();
         $cant = count($var->as_array());
-        $logger->add(Log::ERROR, "Modelo usuario " . $cant);
-        $logger->write();
         if ($cant >= 1) {
             return FALSE;
         } else {
             return TRUE;
         }
+    }
+    
+    public function nuevoUsuario($nombre, $tipo, $mail, $apellido, $nick, $telefono, $pertenencia,$clave){
+    DB::insert("usuario", array("id_tipo_usuario", "nombres_usuario", "mail", "apellidos_usuario", "nick", "fono", "pertenencia", "clave"))
+            ->values(array( $tipo, $nombre, $mail, $apellido, $nick, $telefono, $pertenencia, md5($clave)))
+            ->execute();
     }
 
 }
