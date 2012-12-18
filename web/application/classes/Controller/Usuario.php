@@ -71,7 +71,10 @@ class Controller_Usuario extends Controller {
         $usuarioModel = new Model_Usuario();
         $tipoUsuarioModel = new Model_TipoUsuario;
 
-        $detalleUsuario = $usuarioModel->getUsuarioById($this->request->param("id"));
+        $idParam = $this->request->param("id");
+        $detalleUsuario = $usuarioModel->getUsuarioById($idParam);
+        $sesion = Session::instance();
+        $sesion->set("id_usurio_editar", $idParam);
         $detalleTipoUsuario = $tipoUsuarioModel->getAllTipo();
 
         $editar->set("detalleNick", $detalleUsuario->NICK);
@@ -81,7 +84,7 @@ class Controller_Usuario extends Controller {
         $editar->set("detallePertenencia", $detalleUsuario->PERTENENCIA);
         $editar->set("detalleCorreo", $detalleUsuario->MAIL);
 
-        
+
 
         $editar->set("detalleTipoUsuario", $detalleTipoUsuario);
 
@@ -101,12 +104,6 @@ class Controller_Usuario extends Controller {
 
         $usuarioModel = new Model_Usuario();
 
-        $logger = Log::instance();
-        $usuarios = $usuarioModel->getAllUsuariosAndTipos();
-
-        $editar->set("usuario", $usuarios->NICK);
-        $editar->set("MAIL", $usuarios->MAIL);
-        $editar->set("idTipoUsuario", $usuarios->ID_TIPO_USUARIO);
 
 
         $usuarios = $usuarioModel->getAllUsuarios();
@@ -125,17 +122,27 @@ class Controller_Usuario extends Controller {
     public function action_guardarUsuario() {
         $editar = View::factory("usuario/guardarUsuario");
 
-        $nick = $this->request->post("nick");
-        $mail = $this->request->post("mail");
-        $tipo = $this->request->post("tipo");
-        $nombre = $this->request->post("nombre");
-        $apellido = $this->request->post("apellido");
-        $pertenencia = $this->request->post("pertenencia");
-        $telefono = $this->request->post("telefono");
-        
+
         $usuarioModel = new Model_Usuario();
-        
-        $usuarioModel->updateUsuario(1, $nombre, $tipo, $mail, $apellido, $nick, $telefono, $pertenencia);
+        $validar = Validation::factory($_POST);
+        $validar->rule("nick", array($usuarioModel, "nickUnico"));
+
+        if ($validar->check()) {
+
+            $nick = $this->request->post("nick");
+            $mail = $this->request->post("mail");
+            $tipo = $this->request->post("tipo");
+            $nombre = $this->request->post("nombre");
+            $apellido = $this->request->post("apellido");
+            $pertenencia = $this->request->post("pertenencia");
+            $telefono = $this->request->post("telefono");
+
+            $sesion = Session::instance();
+            $usuarioModel->updateUsuario($sesion->get("id_usurio_editar"), $nombre, $tipo, $mail, $apellido, $nick, $telefono, $pertenencia);
+            $sesion->delete("id_usurio_editar");
+        } else {
+            $editar->set("error", $validar->errors());
+        }
         $links = new Model_Link();
         $template = View::factory("base/menu");
         $template->set("usuario", Session::instance()->GetUsuario());
