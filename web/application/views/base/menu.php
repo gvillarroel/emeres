@@ -10,6 +10,8 @@
         <? echo html::script('media/js/jquery.jqGrid.min.js'); ?>
         <? echo html::script('media/js/i18n/grid.locale-es.js'); ?>
         <? echo html::script('media/js/i18n/jTPS.js'); ?>
+       	<?php if(isset($styles)) foreach ($styles as $style) echo html::style($style);?> 
+        <?php if(isset($scripts)) foreach ($scripts as $file) echo HTML::script($file), PHP_EOL ?> 
         
         
     </head>
