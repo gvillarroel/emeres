@@ -13,9 +13,9 @@ class Controller_Usuario extends Controller {
 
         $usuario = new Model_Usuario();
 
-        if ($this->request->post("correoElectronico") != NULL) {
+        if ($this->request->post("MAIL") != NULL) {
             if ($usuario->
-                            where("correoElectronico", "=", $this->request->post("correoElectronico"))
+                            where("MAIL", "=", $this->request->post("MAIL"))
                             ->count_all() > 0) {
                 $usuario->find();
                 $mensaje = View::factory("usuario/recuperarClaveMensaje")->set("usuario", $usuario)->render();
@@ -38,8 +38,8 @@ class Controller_Usuario extends Controller {
             $codigo = $this->request->query("codigo");
 
             if ($usuario->
-                            where("id", "=", $id)->
-                            where("codigoActivacion", "=", $codigo)->
+                            where("ID_USUARIO", "=", $id)->
+                            where("CODIGO_ACTIVACION", "=", $codigo)->
                             count_all() > 0) {
                 $usuario->find();
 
@@ -47,7 +47,7 @@ class Controller_Usuario extends Controller {
                     if ($this->request->post("clave") == $this->request->post("claveRevision"))
                         if (strlen($this->request->post("clave")) > 5) {
                             $usuario->CambiarClave($this->request->post("clave"));
-                            Session::instance()->SetUsuario($usuario->id);
+                            Session::instance()->SetUsuario($usuario);
                             return $this->redirect('/');
                         }
                         else
@@ -73,8 +73,8 @@ class Controller_Usuario extends Controller {
 
         $detalleUsuario = $usuarioModel->getUsuarioById($this->request->param("id"));
         $detalleTipoUsuario = $tipoUsuarioModel->getAllTipo();
-        $editar->set("detalleUsuario", $detalleUsuario->nombre);
-        $editar->set("detalleCorreo", $detalleUsuario->correoElectronico);
+        $editar->set("detalleUsuario", $detalleUsuario->NICK);
+        $editar->set("detalleCorreo", $detalleUsuario->MAIL);
 
 
         $editar->set("detalleTipoUsuario", $detalleTipoUsuario);
@@ -94,12 +94,18 @@ class Controller_Usuario extends Controller {
         $editar = View::factory("usuario/buscarUsuario");
 
         $usuarioModel = new Model_Usuario();
+
+        $logger = Log::instance();
+        $usuarios = $usuarioModel->getAllUsuariosAndTipos();
+
+        $editar->set("usuario", $usuarios->NICK);
+        $editar->set("MAIL", $usuarios->MAIL);
+        $editar->set("idTipoUsuario", $usuarios->ID_TIPO_USUARIO);
+        
+
         $usuarios = $usuarioModel->getAllUsuarios();
         $editar->set("usuarios", $usuarios);
 
-//        $query = DB::query(Database::SELECT, 'SELECT u.nombre, t.nombre FROM Usuario u, TipoUsuario t WHERE u.idTipoUsuario = t.id;');
-//        $result = $query->execute();
-//        $editar->set("result", $result);        
         
         $template = View::factory("base/menu");
         $template->body = $editar;
@@ -111,13 +117,26 @@ class Controller_Usuario extends Controller {
     }
     
     public function action_guardarUsuario(){
-        
-        
         $links = new Model_Link();
         $template = View::factory("base/menu");
         $template->set("usuario", Session::instance()->GetUsuario());
         $template->set("links", $links->ObtenerLinks(Session::instance()->GetUsuario()));
         $template->body = $editar;
+        $this->response->body($template);
+    }
+    
+    public function action_listado(){
+        $links = new Model_Link();
+        $usuarios = new Model_Usuario();
+        $template = View::factory("base/menu", array(
+            "usuario" => Session::instance()->GetUsuario(),
+            "links" => $links->ObtenerLinks(Session::instance()->GetUsuario())
+        ));
+        $idTipoUsuario = $this->request->query("tipo") ? $this->request->query("tipo") : "2";
+        $usuarios->where("ID_TIPO_USUARIO", "=", $idTipoUsuario);
+        $template->body = View::factory("usuario/listado", array(
+            "usuarios" => $usuarios->find_all()->as_array()
+        ));
         $this->response->body($template);
     }
 

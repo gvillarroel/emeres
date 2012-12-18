@@ -16,7 +16,7 @@
     <body>
         <div class="principal" >
             <div class="usuario">
-                <? echo Form::label("usuario", I18n::get("base.menu.bienvenido")) . $usuario->nombre; ?>
+                <? echo Form::label("usuario", I18n::get("base.menu.bienvenido")) . $usuario->NICK; ?>
                 <? echo Html::image("media/imagenes/cerrar.png", array("class" => "boton", "onclick"=>"javascript:location.href='".URL::site("Inicio/CerrarSesion")."'")); ?>
             </div>
             <?
@@ -36,20 +36,20 @@
                 <?
                     foreach ($links->as_array() as $link)
                     {
-                        if($link->idLinkPadre == NULL)
+                        if($link->ID_LINK_PADRE == NULL)
                         {
                             echo "<li>";
-                            if($link->link != NULL)
-                                echo HTML::anchor ($link->link, I18n::get ($link->texto));
+                            if($link->LINK != NULL)
+                                echo HTML::anchor ($link->LINK, I18n::get ($link->TEXTO));
                             else
-                                echo I18n::get ($link->texto);
+                                echo I18n::get ($link->TEXTO);
                             echo "</li>";
                             
                             echo "<ul>";
                             foreach($links as $sublink)
                             {
-                                if($sublink->idLinkPadre == $link->id)
-                                    echo "<li>".HTML::anchor ($sublink->link, I18n::get ($sublink->texto))."</li>";
+                                if($sublink->ID_LINK_PADRE == $link->ID_LINK)
+                                    echo "<li>".HTML::anchor ($sublink->LINK, I18n::get ($sublink->TEXTO))."</li>";
                             }
                             echo "</ul>";
                         }
