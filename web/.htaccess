@@ -2,7 +2,7 @@
 RewriteEngine On
 
 # Installation directory
-RewriteBase /
+RewriteBase /emeres/web
 
 # Protect hidden files from being viewed
 <Files .*>

@@ -73,9 +73,15 @@ class Controller_Usuario extends Controller {
 
         $detalleUsuario = $usuarioModel->getUsuarioById($this->request->param("id"));
         $detalleTipoUsuario = $tipoUsuarioModel->getAllTipo();
-        $editar->set("detalleUsuario", $detalleUsuario->NICK);
+
+        $editar->set("detalleNick", $detalleUsuario->NICK);
+        $editar->set("detalleNombre", $detalleUsuario->NOMBRES_USUARIO);
+        $editar->set("detalleApellido", $detalleUsuario->APELLIDOS_USUARIO);
+        $editar->set("detalleFono", $detalleUsuario->FONO);
+        $editar->set("detallePertenencia", $detalleUsuario->PERTENENCIA);
         $editar->set("detalleCorreo", $detalleUsuario->MAIL);
 
+        
 
         $editar->set("detalleTipoUsuario", $detalleTipoUsuario);
 
@@ -90,7 +96,7 @@ class Controller_Usuario extends Controller {
     }
 
     public function action_buscar() {
-        
+
         $editar = View::factory("usuario/buscarUsuario");
 
         $usuarioModel = new Model_Usuario();
@@ -101,12 +107,12 @@ class Controller_Usuario extends Controller {
         $editar->set("usuario", $usuarios->NICK);
         $editar->set("MAIL", $usuarios->MAIL);
         $editar->set("idTipoUsuario", $usuarios->ID_TIPO_USUARIO);
-        
+
 
         $usuarios = $usuarioModel->getAllUsuarios();
         $editar->set("usuarios", $usuarios);
 
-        
+
         $template = View::factory("base/menu");
         $template->body = $editar;
         $links = new Model_Link();
@@ -115,8 +121,21 @@ class Controller_Usuario extends Controller {
         $template->set("links", $links->ObtenerLinks(Session::instance()->GetUsuario()));
         $this->response->body($template);
     }
-    
-    public function action_guardarUsuario(){
+
+    public function action_guardarUsuario() {
+        $editar = View::factory("usuario/guardarUsuario");
+
+        $nick = $this->request->post("nick");
+        $mail = $this->request->post("mail");
+        $tipo = $this->request->post("tipo");
+        $nombre = $this->request->post("nombre");
+        $apellido = $this->request->post("apellido");
+        $pertenencia = $this->request->post("pertenencia");
+        $telefono = $this->request->post("telefono");
+        
+        $usuarioModel = new Model_Usuario();
+        
+        $usuarioModel->updateUsuario(1, $nombre, $tipo, $mail, $apellido, $nick, $telefono, $pertenencia);
         $links = new Model_Link();
         $template = View::factory("base/menu");
         $template->set("usuario", Session::instance()->GetUsuario());
@@ -124,19 +143,19 @@ class Controller_Usuario extends Controller {
         $template->body = $editar;
         $this->response->body($template);
     }
-    
-    public function action_listado(){
+
+    public function action_listado() {
         $links = new Model_Link();
         $usuarios = new Model_Usuario();
         $template = View::factory("base/menu", array(
-            "usuario" => Session::instance()->GetUsuario(),
-            "links" => $links->ObtenerLinks(Session::instance()->GetUsuario())
-        ));
+                    "usuario" => Session::instance()->GetUsuario(),
+                    "links" => $links->ObtenerLinks(Session::instance()->GetUsuario())
+                ));
         $idTipoUsuario = $this->request->query("tipo") ? $this->request->query("tipo") : "2";
         $usuarios->where("ID_TIPO_USUARIO", "=", $idTipoUsuario);
         $template->body = View::factory("usuario/listado", array(
-            "usuarios" => $usuarios->find_all()->as_array()
-        ));
+                    "usuarios" => $usuarios->find_all()->as_array()
+                ));
         $this->response->body($template);
     }
 

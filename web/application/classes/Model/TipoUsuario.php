@@ -11,7 +11,7 @@
  * @author Felipe González Alfaro
  */
 class Model_TipoUsuario extends ORM{
-    protected $_table_name = "TipoUsuario";
+    protected $_table_name = "Tipo_Usuario";
 
     public function getAllTipo(){
         

@@ -91,12 +91,8 @@ if (isset($_SERVER['KOHANA_ENV']))
  * - boolean  expose      set the X-Powered-By header                        FALSE
  */
 Kohana::init(array(
-#<<<<<<< HEAD
-	'base_url'   => '/',
-#=======
-#	'base_url'   => '/',
-#        'charset'   =>  'iso-8859-1'
-#>>>>>>> 704c27c37c18be2bb163a0904d747f02af8646ab
+	'base_url'   => '/emeres/web/',
+        'charset'   =>  'UTF-8'
 ));
 
 /**

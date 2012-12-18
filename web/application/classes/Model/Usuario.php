@@ -57,7 +57,33 @@ protected static $_rand_char = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuv
     public function getAllUsuarios(){
 //        return $this->find();
         return $this->find_all();
-    }    
+    }
+    
+    public function updateUsuario($id, $nombre, $tipo, $mail, $apellido, $nick, $telefono, $pertenencia){
+        
+        
+        DB::update('usuario')
+        ->set(array("nombres_usuario"=>$nombre, "id_tipo_usuario"=>$tipo, "mail"=>$mail, "apellidos_usuario"=>$apellido, "nick"=>$nick,"fono"=>$telefono,"pertenencia"=>$pertenencia))
+        ->where('id_usuario', '=', $id)
+        ->execute();
+        
+    }
+    
+    public function nickUnico($nick){
+        
+        $this->where('nick', '=', $nick);
+        
+        $var = $this->find_all();
+        
+        if($var >1){
+            return FALSE;
+            
+        }else{
+            return TRUE;
+        }
+        
+        
+    }
     
 }
 
