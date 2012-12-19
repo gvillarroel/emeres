@@ -53,7 +53,8 @@ class Model_Usuario extends ORM {
 
     public function getAllUsuarios() {
 //        return $this->find();
-        return $this->find_all();
+        $query = DB::select()->from("usuario");
+        return $query->execute();
     }
 
     public function updateUsuario($id, $nombre, $tipo, $mail, $apellido, $nick, $telefono, $pertenencia) {

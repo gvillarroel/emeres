@@ -106,11 +106,8 @@ class Controller_Usuario extends Controller {
         $username = $this->request->post('username');
         $tipo = $this->request->post("tipo");
         if (isset($username) && isset($tipo)) {
-            $log = Log::instance();
             $resultado = $usuarioModel->buscarUsuario($username, $tipo);
-            //$log->add(Log::ERROR, $resultado);
             $editar->set("usuarios", $resultado);
-            $log->write();
             $tipoUsuarioModel = new Model_TipoUsuario;
             $detalleTipoUsuario = $tipoUsuarioModel->getAllTipo();
             $editar->set("detalleTipoUsuario", $detalleTipoUsuario);
