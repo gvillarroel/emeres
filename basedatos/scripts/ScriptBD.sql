@@ -29,14 +29,14 @@ drop table if exists USUARIO;
 /*==============================================================*/
 create table ACTIVIDAD
 (
-   ID_PROYECTO          int not null auto_increment,
-   CORREL_NOVEDAD       int not null,
+   CORREL_ACTIVIDAD        int not null auto_increment,
+   ID_PROYECTO          int not null,
    NOMBRE_ACTIVIDAD     char(200),
    DESCRIPCION_ACTIVIDAD varchar(500),
    FECHA_INICIO_ACTIVIDAD date,
    FECHA_TERMINO_ACTIVIDAD date,
    ESTADO_ACTIVIDAD     int,
-   primary key (ID_PROYECTO, CORREL_NOVEDAD)
+   primary key (CORREL_NOVEDAD)
 );
 
 /*==============================================================*/
