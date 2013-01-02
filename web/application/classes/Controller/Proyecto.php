@@ -40,7 +40,7 @@ class Controller_Proyecto extends Controller {
         $template->set("links", $links->ObtenerLinks(Session::instance()->GetUsuario()));
         //$proyecto = new Model_Proyecto();
         $proyecto_id= $this->request->param('ID_PROYECTO');
-		$proyecto = ORM::factory('proyecto',$proyecto_id);
+		$proyecto = ORM::factory('Proyecto',$proyecto_id);
 		
         $template->body = View::factory("proyecto/buscar");
 		$template->body->set("proyecto", $proyecto);
