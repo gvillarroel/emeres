@@ -13,9 +13,9 @@ class Controller_Foro extends Controller {
         $template = View::factory("base/menu");
         $template->set("usuario", Session::instance()->GetUsuario());
         $template->set("links", $links->ObtenerLinks(Session::instance()->GetUsuario()));
+
         $template->body = View::factory("foro/ini");
-	
-	$template->body->set("user",Session::instance()->GetUsuario());
+	$template->body->set("usuario",Session::instance()->GetUsuario());
 
 
         $this->response->body($template);
@@ -26,8 +26,8 @@ class Controller_Foro extends Controller {
 
 		//return $this->redirect("http://localhost/foro/ucp.php?mode=login&username=cesar&password=cesar1234");
 
-		$vars["username"]="cesar";
-		$vars["password"]="cesar1234";
+		//$vars["username"]="cesar";
+		//$vars["password"]="cesar1234";
 		//echo $foro->sendpost("http://localhost/foro/ucp.php?mode=login",$vars,"http://localhost/foro");
 		//echo $foro->sendpost("http://localhost/foro/ucp.php?mode=login",$vars,"http://localhost/foro/viewforum.php?f=3");
 		//echo $foro->sendpost("http://localhost/foro/ucp.php?mode=login",$vars,"http://localhost/foro/ucp.php?mode=login");
