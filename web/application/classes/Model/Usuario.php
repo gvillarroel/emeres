@@ -53,14 +53,14 @@ class Model_Usuario extends ORM {
 
     public function getAllUsuarios() {
 //        return $this->find();
-        $query = DB::select()->from("usuario");
+        $query = DB::select()->from("USUARIO");
         return $query->execute();
     }
 
     public function updateUsuario($id, $nombre, $tipo, $mail, $apellido, $nick, $telefono, $pertenencia) {
 
 
-        DB::update('usuario')
+        DB::update('USUARIO')
                 ->set(array("nombres_usuario" => $nombre, "id_tipo_usuario" => $tipo, "mail" => $mail, "apellidos_usuario" => $apellido, "nick" => $nick, "fono" => $telefono, "pertenencia" => $pertenencia))
                 ->where('id_usuario', '=', $id)
                 ->execute();
@@ -79,14 +79,14 @@ class Model_Usuario extends ORM {
     }
     
     public function nuevoUsuario($nombre, $tipo, $mail, $apellido, $nick, $telefono, $pertenencia,$clave){
-    DB::insert("usuario", array("id_tipo_usuario", "nombres_usuario", "mail", "apellidos_usuario", "nick", "fono", "pertenencia", "clave"))
+    DB::insert("USUARIO", array("id_tipo_usuario", "nombres_usuario", "mail", "apellidos_usuario", "nick", "fono", "pertenencia", "clave"))
             ->values(array( $tipo, $nombre, $mail, $apellido, $nick, $telefono, $pertenencia, md5($clave)))
             ->execute();
     }
     
     public function buscarUsuario($name, $tipo){
         
-        $query = DB::select()->from("usuario")->where("NOMBRES_USUARIO", "=", $name)->and_where("ID_TIPO_USUARIO", "=", $tipo);
+        $query = DB::select()->from("USUARIO")->where("NOMBRES_USUARIO", "=", $name)->and_where("ID_TIPO_USUARIO", "=", $tipo);
         
         return $query->execute();
         
