@@ -59,7 +59,7 @@ class Controller_Compromiso extends Controller {
         $template->set("links", $links->ObtenerLinks(Session::instance()->GetUsuario()));
         /***************************************/
         $compromiso_id= $this->request->param('ID_COMPROMISO');
-		$compromiso = ORM::factory('compromiso',$compromiso_id);
+		$compromiso = ORM::factory('Compromiso',$compromiso_id);
 		
         $template->body = View::factory("compromiso/buscar");
 		$template->body->set("compromiso", $compromiso);
